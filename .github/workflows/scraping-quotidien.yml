@@ -30,6 +30,7 @@ jobs:
       - name: Lancer le scraping
         env:
           CI: "true"
+          PYTHONUNBUFFERED: "1"
           TIME_BUDGET_SECONDS: "18000"   # 5h, laisse de la marge pour le commit
         run: python main.py
 
