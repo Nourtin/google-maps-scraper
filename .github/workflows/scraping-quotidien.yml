@@ -1,0 +1,46 @@
+name: Scraping B2B quotidien
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # tous les jours à 6h UTC — adapte à ton fuseau
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350   # marge sous la limite de 6h de GitHub
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installer les dépendances
+        run: |
+          pip install -r requirements.txt
+          playwright install --with-deps chrome
+
+      - name: Lancer le scraping
+        env:
+          CI: "true"
+          TIME_BUDGET_SECONDS: "18000"   # 5h, laisse de la marge pour le commit
+        run: python main.py
+
+      - name: Commit et push des résultats
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add progress/done.json output/resultats.csv
+          git diff --staged --quiet || git commit -m "Scraping auto : $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+
+      - name: Vérifier si terminé
+        if: hashFiles('SCRAPING_TERMINE') != ''
+        run: echo "::notice::Toutes les combinaisons sont traitées."
