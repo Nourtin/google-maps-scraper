@@ -34,5 +34,5 @@ SECTEURS = [
     "Vente matériel informatique",
     "Vente matériel médical",
     "CPAS",
-    "Club de football"
+    "football club"
 ]
