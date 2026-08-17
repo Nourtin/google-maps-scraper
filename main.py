@@ -18,7 +18,7 @@ TIME_BUDGET_SECONDS = int(os.environ.get("TIME_BUDGET_SECONDS", 5 * 60 * 60))
 
 # En CI il n'y a pas d'écran -> headless obligatoire.
 # En local tu peux garder False si tu veux voir le navigateur.
-HEADLESS = os.environ.get("CI", "false").lower() == "true"
+HEADLESS = os.environ.get("CI", "false").lower() == "false"
 
 
 def load_progress():
