@@ -1,0 +1,38 @@
+# Liste des secteurs. Chaque terme sera combiné avec chaque ville
+# pour former une recherche Google Maps : "{secteur} à {ville}"
+
+SECTEURS = [
+    "Cabinets d'assurance",
+    "Cabinets comptables",
+    "Agence de voyage",
+    "Agence de déménagement",
+    "Société de transport",
+    "Urologue",
+    "Ophtalmologue",
+    "Cardiologue",
+    "Vétérinaire",
+    "Garages",
+    "Atelier mécanique",
+    "Psychologue",
+    "Psychiatre",
+    "Cancérologue",
+    "ORL",
+    "Médecin généraliste",
+    
+    "Facility Management",
+    "Organisme de formation",
+    "Cabinets de recrutement",
+    "Cabinets intérim",
+    "Agence de communication",
+    "Agence digitale",
+    "Opticien",
+    "Pharmacie",
+    "Agence marketing",
+    "Orphelinats",
+    "Cabinets d'avocat",
+    "Cabinet d'architecte",
+    "Vente matériel informatique",
+    "Vente matériel médical",
+    "CPAS",
+    "Club de football"
+]

@@ -1,0 +1,6 @@
+# Liste des sites à ouvrir par scrapertest.py (un onglet par site, dans l'ordre).
+# Chaque entrée doit avoir "name" (juste pour les logs) et "url".
+sites:
+  - name: "IP Check"
+    url: "https://www.pagesjaunes.fr/"
+
