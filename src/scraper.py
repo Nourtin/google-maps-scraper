@@ -57,7 +57,7 @@ def scroll_results_panel(page, max_scrolls: int = 25):
         time.sleep(1.2 + random.random() * 0.8)
 
 
-def scrape_sector_in_city(context, secteur: str, ville: str, max_results: int = 60):
+def scrape_sector_in_city(context, secteur: str, ville: str, max_results: int = 1060):
     page = context.new_page()
     query = f"{secteur} à {ville}"
     url = f"https://www.google.com/maps/search/{quote(query)}"
