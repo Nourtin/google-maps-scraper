@@ -1,65 +1,53 @@
 name: Scraping B2B quotidien
-
 on:
   schedule:
     - cron: "0 6 * * *"
   workflow_dispatch: {}
-
 permissions:
   contents: write
-
 jobs:
   scrape:
     runs-on: ubuntu-latest
     timeout-minutes: 350
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Installer les dépendances
+      - name: Installer les dependances
         run: |
           pip install -r requirements.txt
           playwright install --with-deps chrome
-
-            - name: Lancer le scraping avec sauvegardes périodiques
-            env:
-              CI: "true"
-              PYTHONUNBUFFERED: "1"
-              TIME_BUDGET_SECONDS: "18000"
-            run: |
-              git config user.name "github-actions[bot]"
-              git config user.email "github-actions[bot]@users.noreply.github.com"
-    
-              python -u main.py &
-              SCRAPE_PID=$!
-    
-              while kill -0 "$SCRAPE_PID" 2>/dev/null; do
-                sleep 300
-                git add -f progress/done.json output/resultats.csv
-                if ! git diff --staged --quiet; then
-                  git commit -m "Sauvegarde auto : $(date -u +'%Y-%m-%d %H:%M UTC')"
-                  git pull --rebase origin main
-                  git push
-                  echo "Sauvegarde effectuée à $(date -u +'%H:%M UTC')"
-                fi
-              done
-    
-              wait "$SCRAPE_PID"
-    
-          - name: Commit final (filet de sécurité)
-            if: always()
-            run: |
-              git config user.name "github-actions[bot]"
-              git config user.email "github-actions[bot]@users.noreply.github.com"
-              git add -f progress/done.json output/resultats.csv
-              git diff --staged --quiet || (git commit -m "Sauvegarde finale : $(date -u +'%Y-%m-%d %H:%M UTC')" && git pull --rebase origin main && git push)
-
-      - name: Vérifier si terminé
+      - name: Lancer le scraping avec sauvegardes periodiques
+        env:
+          CI: "true"
+          PYTHONUNBUFFERED: "1"
+          TIME_BUDGET_SECONDS: "18000"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          python -u main.py &
+          SCRAPE_PID=$!
+          while kill -0 "$SCRAPE_PID" 2>/dev/null; do
+            sleep 300
+            git add -f progress/done.json output/resultats.csv
+            if ! git diff --staged --quiet; then
+              git commit -m "Sauvegarde auto : $(date -u +'%Y-%m-%d %H:%M UTC')"
+              git pull --rebase origin main
+              git push
+              echo "Sauvegarde effectuee"
+            fi
+          done
+          wait "$SCRAPE_PID"
+      - name: Commit final
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f progress/done.json output/resultats.csv
+          git diff --staged --quiet || (git commit -m "Sauvegarde finale : $(date -u +'%Y-%m-%d %H:%M UTC')" && git pull --rebase origin main && git push)
+      - name: Verifier si termine
         if: hashFiles('SCRAPING_TERMINE') != ''
-        run: echo "::notice::Toutes les combinaisons sont traitées."
+        run: echo "::notice::Toutes les combinaisons sont traitees."
