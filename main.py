@@ -76,12 +76,12 @@ def main():
 
                 try:
                     rows = scrape_sector_in_city(
-                        context,
-                        secteur,
-                        ville,
-                        max_results=60,
-                        enrich_email=True,
-                    )
+                    context,
+                    secteur,
+                    ville,
+                    max_results=60,
+                )
+                    
                     for row in rows:
                         append_row(row)
 
