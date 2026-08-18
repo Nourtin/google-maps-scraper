@@ -3,8 +3,6 @@ import time
 import random
 from urllib.parse import quote
 
-from .email_finder import find_email_on_website
-
 
 def clean_text(text: str) -> str:
     """Retire les retours à la ligne / espaces parasites en début et fin,
@@ -59,7 +57,7 @@ def scroll_results_panel(page, max_scrolls: int = 25):
         time.sleep(1.2 + random.random() * 0.8)
 
 
-def scrape_sector_in_city(context, secteur: str, ville: str, max_results: int = 60, enrich_email: bool = True):
+def scrape_sector_in_city(context, secteur: str, ville: str, max_results: int = 60):
     page = context.new_page()
     query = f"{secteur} à {ville}"
     url = f"https://www.google.com/maps/search/{quote(query)}"
@@ -114,10 +112,6 @@ def scrape_sector_in_city(context, secteur: str, ville: str, max_results: int = 
                     detail_page.locator('button[jsaction*="category"]').first
                 )) or secteur
 
-                email = None
-                if enrich_email and site_web:
-                    email = find_email_on_website(context, site_web)
-
                 results.append(
                     {
                         "nom": nom or "",
@@ -127,7 +121,6 @@ def scrape_sector_in_city(context, secteur: str, ville: str, max_results: int = 
                         "adresse": adresse or "",
                         "ville": guess_city_from_address(adresse, ville),
                         "code_postal": extract_postal_code(adresse),
-                        "email": email or "",
                     }
                 )
             except Exception:
