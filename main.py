@@ -79,7 +79,7 @@ def main():
                     context,
                     secteur,
                     ville,
-                    max_results=60,
+                    max_results=1060,
                 )
                     
                     for row in rows:
