@@ -3,5 +3,5 @@
 VILLES = [
     "Bruxelles", "Tournai", "Charleroi", "Liège", "Namur", "Mons",
     "La Louvière", "Mouscron", "Braine-l'Alleud", "Wavre", "Ottignies",
-    "Binche",  "Nivelles", "Soignies", "Arlon", "Waterloo", "Herstal"
+    "Binche", "Ath", "Nivelles", "Soignies", "Arlon", "Waterloo", "Herstal"
 ]
