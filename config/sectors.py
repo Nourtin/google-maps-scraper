@@ -18,7 +18,6 @@ SECTEURS = [
     "Cancérologue",
     "ORL",
     "Médecin généraliste",
-    
     "Facility Management",
     "Organisme de formation",
     "Cabinets de recrutement",
@@ -34,5 +33,5 @@ SECTEURS = [
     "Vente matériel informatique",
     "Vente matériel médical",
     "CPAS",
-    "football club"
+    "Club de football"
 ]
